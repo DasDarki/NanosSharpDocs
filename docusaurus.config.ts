@@ -12,8 +12,8 @@ const config: Config = {
     faster: true,
   },
 
-  url: 'https://dasdarki.de',
-  baseUrl: '/nanossharp/',
+  url: 'https://nanossharp.dasdarki.de',
+  baseUrl: '/',
   trailingSlash: false,
 
   organizationName: 'DasDarki',
