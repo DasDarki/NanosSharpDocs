@@ -1,0 +1,39 @@
+import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+
+const sidebars: SidebarsConfig = {
+  docs: [
+    'intro',
+    {
+      type: 'category',
+      label: 'Getting started',
+      collapsed: false,
+      items: ['getting-started/installation', 'getting-started/first-package', 'getting-started/docker'],
+    },
+    {
+      type: 'category',
+      label: 'Guides',
+      collapsed: false,
+      items: [
+        'guides/packages',
+        'guides/api',
+        'guides/events',
+        'guides/entities',
+        'guides/async',
+        'guides/lua-interop',
+        'guides/networking',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Reference',
+      items: ['reference/configuration', 'reference/performance', 'reference/architecture'],
+    },
+    {
+      type: 'category',
+      label: 'Contributing',
+      items: ['contributing/building', 'contributing/releasing'],
+    },
+  ],
+};
+
+export default sidebars;
