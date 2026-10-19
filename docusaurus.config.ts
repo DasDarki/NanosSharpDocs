@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'NanosSharp',
-  tagline: 'Write nanos world server packages in C#',
+  tagline: 'Write nanos world packages in C#',
   favicon: 'img/favicon.png',
 
   future: {
@@ -25,6 +25,15 @@ const config: Config = {
       onBrokenMarkdownLinks: 'throw',
     },
   },
+
+  headTags: [
+    {tagName: 'link', attributes: {rel: 'preconnect', href: 'https://fonts.googleapis.com'}},
+    {tagName: 'link', attributes: {rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous'}},
+  ],
+
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;600&display=swap',
+  ],
 
   i18n: {
     defaultLocale: 'en',
@@ -61,6 +70,7 @@ const config: Config = {
       },
       items: [
         {type: 'docSidebar', sidebarId: 'docs', position: 'left', label: 'Docs'},
+        {to: '/docs/guides/client', position: 'left', label: 'Client'},
         {href: 'https://www.nuget.org/packages/NanosSharp', label: 'NuGet', position: 'right'},
         {href: 'https://github.com/DasDarki/NanosSharp', label: 'GitHub', position: 'right'},
       ],
@@ -73,6 +83,7 @@ const config: Config = {
           items: [
             {label: 'Getting started', to: '/docs/getting-started/installation'},
             {label: 'Writing packages', to: '/docs/guides/packages'},
+            {label: 'Client packages', to: '/docs/guides/client'},
           ],
         },
         {
@@ -94,8 +105,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} DasDarki. NanosSharp is not affiliated with nanos world.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: prismThemes.oneDark,
+      darkTheme: prismThemes.oneDark,
       additionalLanguages: ['csharp', 'toml', 'lua', 'bash', 'docker'],
     },
   } satisfies Preset.ThemeConfig,

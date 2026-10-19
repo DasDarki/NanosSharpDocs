@@ -67,7 +67,12 @@ Events.Call("RoundStarted", 3);
 Events.SubscribeRemote("Vote", (Player player, string map) => Log.Info($"{player.Name} voted {map}"));
 Events.CallRemote("ShowScoreboard", player, 10, "points");
 Events.BroadcastRemote("RoundEnded", winner.Name);
+Events.BroadcastRemoteUnreliable("Wind", windDirection);
 ```
+
+Remote events are delivered reliably and in order. The `Unreliable` variants are cheaper but may lose messages or
+deliver them out of order. On the client `Events.CallRemote(name, ...)` sends to the server, see
+[Client packages](client.md#talking-to-the-server).
 
 Handler parameters are converted from the event arguments, extra arguments are ignored and missing ones are `null` or
 the default value. Lua packages receive the same events and arguments.

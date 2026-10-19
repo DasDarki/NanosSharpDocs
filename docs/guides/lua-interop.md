@@ -5,7 +5,7 @@ sidebar_position: 6
 # Lua interop
 
 Lua packages share values through `Package.Export`, which writes a global that every package can read. `Exports` is the
-C# side of it.
+C# side of it. It works the same on the server and in [client packages](client.md).
 
 ## Calling Lua from C#
 

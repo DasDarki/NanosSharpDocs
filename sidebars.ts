@@ -7,7 +7,12 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Getting started',
       collapsed: false,
-      items: ['getting-started/installation', 'getting-started/first-package', 'getting-started/docker'],
+      items: [
+        'getting-started/installation',
+        'getting-started/first-package',
+        'getting-started/client-setup',
+        'getting-started/docker',
+      ],
     },
     {
       type: 'category',
@@ -15,6 +20,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'guides/packages',
+        'guides/client',
         'guides/api',
         'guides/events',
         'guides/entities',

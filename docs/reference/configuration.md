@@ -8,6 +8,11 @@ NanosSharp reads `NanosSharp.toml` in the server directory and creates it with t
 nanos world rewrites its own `Config.toml` and `Package.toml` files, so NanosSharp keeps its settings separate.
 
 ```toml title="NanosSharp.toml"
+[clients]
+required = false
+handshake_timeout_seconds = 30
+kick_message = "This server requires NanosSharp {version}. Download it at https://nanossharp.dasdarki.de"
+
 [compilation]
 optimize = true
 
@@ -25,6 +30,9 @@ generate = true
 
 | Setting | Description |
 |---|---|
+| `clients.required` | Kick players without a compatible [NanosSharp client](../guides/client.md#players-without-nanossharp). |
+| `clients.handshake_timeout_seconds` | Time a ready player has to report its NanosSharp client. |
+| `clients.kick_message` | Message for kicked players, `{version}` is replaced with the server version. |
 | `compilation.optimize` | Compile script packages with optimizations. Disable it for easier debugging. |
 | `hot_reload.enabled` | Watch `Server/` of every C# package and reload it on changes. |
 | `hot_reload.delay_milliseconds` | Time without further changes before a reload starts. |

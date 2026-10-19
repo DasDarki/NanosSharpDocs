@@ -5,8 +5,8 @@ slug: /intro
 
 # What is NanosSharp?
 
-NanosSharp is a .NET runtime for [nanos world](https://nanos-world.com) dedicated servers. It lets you write server
-packages in C# next to, or instead of, Lua.
+NanosSharp is a .NET runtime for [nanos world](https://nanos-world.com). It lets you write packages in C# next to, or
+instead of, Lua, on the dedicated server and in the game client.
 
 ```csharp
 public sealed class Gamemode : Package
@@ -36,12 +36,14 @@ There are two kinds of C# packages:
 |---|---|---|
 | Script package | `.cs` files in `Server/` | the server, with Roslyn |
 | Assembly package | `.dll` files in `Server/` | you, with `dotnet build` |
+| Client package | `.cs` files in `Client/` and `Shared/` | the game client, in a [sandbox](guides/client.md#the-sandbox) |
 
 ## Requirements
 
-- A nanos world dedicated server on **Linux x64**. Windows is not supported yet.
+- A nanos world dedicated server on **Linux x64**. Windows servers are not supported yet.
 - The **.NET 10 runtime** on the server machine, or the [Docker image](getting-started/docker.md) which contains it.
 - The **.NET 10 SDK** on your development machine for IDE support and assembly packages.
+- The [NanosSharp client](getting-started/client-setup.md) on the players' machines, only for client packages.
 
 :::caution Early development
 NanosSharp is young. The API can still change between minor versions.
