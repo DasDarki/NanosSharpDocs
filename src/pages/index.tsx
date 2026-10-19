@@ -54,8 +54,8 @@ const facts = [
 
 const steps = [
   {
-    title: 'Install the runtime',
-    command: 'curl -L …/nanossharp-<version>-linux-x64.tar.gz | tar -xz',
+    title: 'Install NanosSharp',
+    command: './nanossharp-install server',
     link: '/docs/getting-started/installation',
   },
   {

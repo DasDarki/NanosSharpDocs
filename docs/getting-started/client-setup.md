@@ -7,14 +7,33 @@ sidebar_position: 3
 The NanosSharp client runs C# [client packages](../guides/client.md) in the game. Players only need it for servers that
 use client packages, everything else in nanos world keeps working as before.
 
-:::info Not part of the releases yet
-The client is not published in the releases yet. Until it is, build it from source with `xmake client`, see
-[Building from source](../contributing/building.md#game-client).
-:::
+## Install with the installer
 
-## Install
+The installer finds nanos world through Steam, downloads the latest client, checks it against the published checksums
+and puts it next to the game. Close nanos world before running it.
 
-Copy the content of the client build into the folder of the game executable:
+**Windows:** download
+[`nanossharp-install-win-x64.exe`](https://github.com/DasDarki/NanosSharp/releases/latest/download/nanossharp-install-win-x64.exe)
+and run it.
+
+**Linux and Steam Deck:**
+
+```bash
+curl -fsSLo nanossharp-install https://github.com/DasDarki/NanosSharp/releases/latest/download/nanossharp-install-linux-x64
+chmod +x nanossharp-install
+./nanossharp-install client
+```
+
+On Linux the installer also tells Proton to load NanosSharp, so no launch options are needed. nanos world has to be
+started once before, because Proton creates its settings on the first start.
+
+Run the installer again to update the client. `--uninstall` removes it, `--path` points it to a nanos world folder Steam
+does not know about, and `--help` lists every option.
+
+## Install by hand
+
+Download `nanossharp-client-<version>-win-x64.zip` from the [releases](https://github.com/DasDarki/NanosSharp/releases)
+and extract it into the folder of the game executable:
 
 ```
 nanos-world/NanosWorld/Binaries/Win64/
@@ -25,18 +44,11 @@ nanos-world/NanosWorld/Binaries/Win64/
 
 The client brings its own .NET runtime, nothing has to be installed on the system.
 
-## Linux and Steam Deck
-
-nanos world runs through Proton. Wine loads its own `version.dll` unless told otherwise, so add this to the launch
-options of nanos world in Steam:
+On Linux, Wine loads its own `version.dll` unless told otherwise. Add this to the launch options of nanos world in Steam:
 
 ```
-WINEDLLOVERRIDES="version=n,b" PROTON_DISABLE_NVAPI=1 %command%
+WINEDLLOVERRIDES="version=n,b" %command%
 ```
-
-`PROTON_DISABLE_NVAPI=1` is only needed on AMD and Intel graphics. Without it the game can crash after a while when you
-switch away from the window. This is a problem of the game with NVIDIA Reflex on these graphics cards and also happens
-without NanosSharp.
 
 ## Check that it works
 
@@ -51,4 +63,5 @@ On servers without NanosSharp the client stays idle and logs why it did not star
 
 ## Uninstall
 
-Delete `version.dll` and the `NanosSharp` folder from `NanosWorld/Binaries/Win64`.
+Run `nanossharp-install client --uninstall`, or delete `version.dll` and the `NanosSharp` folder from
+`NanosWorld/Binaries/Win64` and remove the launch options again.
