@@ -69,8 +69,19 @@ On the first start NanosSharp creates `NanosSharp.toml` in the server directory,
 
 ## Updating
 
-Run the installer again, or extract the bundle of the new version over the old one. Make sure the NanosSharp release
-supports your server version, NanosSharp checks the server binary on start and disables itself with a clear message if
-something does not match.
+Run `./nanossharp-install server` again, or turn on automatic updates in `NanosSharp.toml`:
+
+```toml title="NanosSharp.toml"
+[update]
+enabled = true
+```
+
+The launcher then checks for a newer release on each start and installs it before starting the server. Updates are only
+applied when they are newer, and the previous version is kept and restored if an update cannot be unpacked. Make sure
+the NanosSharp release supports your server version, NanosSharp checks the server binary on start and disables itself
+with a clear message if something does not match.
+
+Every release is signed. The installer verifies the signature against a key built into it and refuses anything that is
+not a genuine, untampered NanosSharp release, so a hijacked download or mirror cannot slip in a malicious build.
 
 Prefer containers? Use the [Docker image](docker.md), it ships the server, .NET and NanosSharp together.
