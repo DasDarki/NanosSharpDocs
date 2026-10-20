@@ -66,7 +66,7 @@ const steps = [
   {
     title: 'Start the server',
     command: './NanosSharp.sh',
-    link: '/docs/getting-started/installation#3-start-the-server-with-the-launcher',
+    link: '/docs/getting-started/installation#start-the-server-with-the-launcher',
   },
 ];
 

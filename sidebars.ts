@@ -27,6 +27,7 @@ const sidebars: SidebarsConfig = {
         'guides/async',
         'guides/lua-interop',
         'guides/networking',
+        'guides/debugging',
       ],
     },
     {

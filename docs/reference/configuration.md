@@ -13,6 +13,9 @@ required = false
 handshake_timeout_seconds = 30
 kick_message = "This server requires NanosSharp {version}. Download it at https://nanossharp.dasdarki.de"
 
+[debug]
+enabled = false
+
 [compilation]
 optimize = true
 
@@ -33,6 +36,7 @@ generate = true
 | `clients.required` | Kick players without a compatible [NanosSharp client](../guides/client.md#players-without-nanossharp). |
 | `clients.handshake_timeout_seconds` | Time a ready player has to report its NanosSharp client. |
 | `clients.kick_message` | Message for kicked players, `{version}` is replaced with the server version. |
+| `debug.enabled` | Turn on [debugging](../guides/debugging.md): build packages unoptimized and let clients debug. |
 | `compilation.optimize` | Compile script packages with optimizations. Disable it for easier debugging. |
 | `hot_reload.enabled` | Watch `Server/` of every C# package and reload it on changes. |
 | `hot_reload.delay_milliseconds` | Time without further changes before a reload starts. |
@@ -45,4 +49,5 @@ generate = true
 | Variable | Description |
 |---|---|
 | `DOTNET_ROOT` | Location of the .NET runtime when it is not installed in a default location. |
+| `NANOSSHARP_DEBUG` | Set to `1` in the game's launch options to let this client debug, see [Debugging](../guides/debugging.md). |
 | `DOTNET_PerfMapEnabled=1` | Expose JIT compiled methods to `perf` for profiling. |
