@@ -23,23 +23,26 @@ dotnet new nanossharp-script -n MyGamemode -o my-gamemode --title "My Gamemode" 
 my-gamemode/
  ├─ .gitignore
  ├─ Package.toml
- ├─ MyGamemode.slnx                opens the server and client projects
+ ├─ MyGamemode.slnx                opens all three projects
  ├─ Server/                        compiled by the server, together with Shared
  │   ├─ MyGamemode.cs
  │   └─ MyGamemode.Server.csproj
  ├─ Client/                        compiled by the game client, together with Shared
  │   ├─ MyGamemode.cs
  │   └─ MyGamemode.Client.csproj
- └─ Shared/                        compiled into both sides
+ └─ Shared/                        its own project, referenced by both sides
+     ├─ MyGamemode.Shared.csproj
      └─ Shared.cs
 ```
 
 ```csharp title="Server/MyGamemode.cs"
+namespace MyGamemode;
+
 public sealed class MyGamemode : Package
 {
     protected override void OnStart()
     {
-        Log.Info($"{Title} started on the {Shared.Side}.");
+        Log.Info($"{Title} started, protocol version {Protocol.Version}.");
         Player.OnReady += OnPlayerReady;
     }
 
@@ -55,24 +58,21 @@ public sealed class MyGamemode : Package
 ```
 
 The server compiles `Server` plus `Shared`, the game client compiles `Client` plus `Shared`, each into its own
-assembly. There is one project per side; `Shared` has no project of its own but is linked into both, so shared code
-gets IntelliSense on either side. `SERVER` is defined for the server project and `CLIENT` for the client one, so
-conditional code resolves the same way the server compiles it:
+assembly. `Shared` is its own project that both sides reference, so shared code has one home and one namespace.
+Every project uses the `MyGamemode` root namespace, so you reach types from any side without extra `using`s:
 
 ```csharp title="Shared/Shared.cs"
-public static class Shared
-{
-    public const int ProtocolVersion = 1;
+namespace MyGamemode;
 
-#if SERVER
-    public const string Side = "server";
-#elif CLIENT
-    public const string Side = "client";
-#endif
+public static class Protocol
+{
+    public const int Version = 1;
 }
 ```
 
-Delete the `Client` folder for a server-only package, or the `Server` folder for a client-only one.
+`SERVER` and `CLIENT` are defined for the matching side project; shared code is side neutral, put server or client
+specific code in `Server` or `Client`. Delete the `Client` folder for a server-only package, or the `Server`
+folder for a client-only one.
 
 Add the package to the server like any other package, for example with `--packages my-gamemode` or in `Config.toml`,
 and start the server with `./NanosSharp.sh`. Open `MyGamemode.slnx` in Rider, Visual Studio or VS Code for
@@ -101,5 +101,5 @@ is never copied next to your code, the server provides it.
 ## Without templates
 
 A C# package only needs a `Package.toml` and at least one `.cs` or `.dll` file in `Server/` (or `Client/`). When a
-script package has no project file, the server generates one in that folder on the first load, linking `Shared` and
-defining `SERVER` or `CLIENT`, so your IDE still works.
+script package has no project file, the server generates one on the first load, plus a `Shared` project when there
+is shared code, so your IDE still works.
