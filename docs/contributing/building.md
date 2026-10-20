@@ -19,8 +19,8 @@ xmake deploy -s /path/to/server        # install the runtime and the examples in
 | Task | Description |
 |---|---|
 | `xmake deploy -s <server>` | Build and install NanosSharp into a server directory. |
-| `xmake test` | Deploy into the server, run the integration tests in `tests/` and report the results. |
-| `xmake test -d benchmarks` | Run the C# and Lua benchmarks. |
+| `xmake test` | Deploy into the server, run the integration tests in `packages/e2e/server` and report the results. |
+| `xmake test -d packages/benchmarks` | Run the C# and Lua benchmarks. |
 | `xmake bundle -r <version>` | Build the release archive in `build/release`. |
 | `xmake dump-api` | Dump the native scripting API of the server for the generator. |
 | `xmake generate` | Generate the typed API from the dump and the API definitions. |
@@ -38,8 +38,8 @@ xmake client                           # builds into build/client
 ```
 
 Copy the content of `build/client` into `NanosWorld/Binaries/Win64` of the game, see
-[Client setup](../getting-started/client-setup.md). `manual-tests/nanossharp-client-tests` is a package that checks the
-client API in a running game.
+[Client setup](../getting-started/client-setup.md). `packages/e2e/client/nanossharp-client-tests` is a package that checks
+the client API in a running game.
 
 ## Compatibility
 
