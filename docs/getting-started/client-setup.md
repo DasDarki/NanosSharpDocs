@@ -50,6 +50,18 @@ On Linux, Wine loads its own `version.dll` unless told otherwise. Add this to th
 WINEDLLOVERRIDES="version=n,b" %command%
 ```
 
+## Automatic updates
+
+The client keeps itself up to date. On game start it checks for a newer signed release in the background, downloads and
+verifies it, and applies it the next time the game starts. You stay compatible with servers without reinstalling.
+
+Updates are only applied when they are newer, and only when their signature matches the key built into the client, so a
+tampered or forged download is rejected. To turn automatic updates off, add this to the launch options of nanos world:
+
+```
+NANOSSHARP_NO_UPDATE=1 %command%
+```
+
 ## Check that it works
 
 The client writes its log to `NanosWorld/Binaries/Win64/NanosSharp/nanossharp.log`. After joining a server with C#
