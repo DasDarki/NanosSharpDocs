@@ -58,21 +58,29 @@ public static class Teams
 
 ## The sandbox
 
-Client code runs on the computers of your players, so it is compiled in a sandbox. The compiler checks every type and
-member the package uses against an allow list and rejects the package if anything else is used.
+Client code runs on your players' computers, so it is untrusted and runs inside a WebAssembly sandbox for real runtime
+isolation. The package is compiled with Roslyn on the player's machine, outside the sandbox, and the compiled assembly
+then runs inside it.
 
-| Allowed | Not allowed |
-|---|---|
-| The whole NanosSharp API | `System.IO`, files and processes |
-| Collections, LINQ, `StringBuilder`, regular expressions | Reflection, `Activator`, expression trees |
-| `async`/`await`, `Task`, timers from NanosSharp | Threads, `GC`, `Environment.Exit` |
-| `System.Text.Json`, `System.Numerics`, math, dates | `HttpClient` and other networking from .NET |
-| Exceptions and the usual attributes | `unsafe`, `dynamic`, P/Invoke, `Marshal`, `Unsafe` |
+The sandbox restricts what the code can **reach**, not what it may **write**. The full C# language and base class
+library are available: reflection, dependency injection, `async`/`await`, LINQ, `System.Text.Json`, `unsafe` and the
+rest all compile and run. What the sandbox takes away is ambient authority. The code has:
 
-A rejected package logs every violation and does not start. The game API itself stays available as usual, for example
-[`HTTP`](networking.md) for web requests and `ScriptFile` for the files nanos world allows Lua to access.
+- no file system access outside its own package directory,
+- no network,
+- no process creation,
+- no native calls or P/Invoke to anything but the brokered engine API.
 
-Client packages cannot reference NuGet packages or ship `.dll` files, and they have no hot reload.
+These are not rejected by a compiler. They have nothing to act on at runtime and fail: a package that calls
+`File.WriteAllText`, `Process.Start`, `Environment.Exit` or `new HttpClient()` throws or is contained instead of
+touching the machine. To reach the outside world, use the engine API the client exposes, for example
+[`HTTP`](networking.md) for web requests and `ScriptFile` for the files nanos world allows access to.
+
+Because the compiler and dependency resolver stay outside the sandbox, client packages cannot reference NuGet packages
+or ship `.dll` files, and they have no hot reload. Everything else, including reflection and dependency injection, works
+exactly as on the server.
+
+See [Security](../reference/security.md) for the full trust model and what the sandbox does and does not guarantee.
 
 ## Differences to server packages
 
