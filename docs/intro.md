@@ -40,8 +40,8 @@ There are two kinds of C# packages:
 
 ## Requirements
 
-- A nanos world dedicated server on **Linux x64**. Windows servers are not supported yet.
-- The **.NET 10 runtime** on the server machine, or the [Docker image](getting-started/docker.md) which contains it.
+- A nanos world dedicated server on **Linux x64** or **Windows x64**.
+- The **.NET 10 runtime** on a Linux server, or the [Docker image](getting-started/docker.md) which contains it. The Windows bundle ships its own runtime.
 - The **.NET 10 SDK** on your development machine for IDE support and assembly packages.
 - The [NanosSharp client](getting-started/client-setup.md) on the players' machines, only for client packages.
 

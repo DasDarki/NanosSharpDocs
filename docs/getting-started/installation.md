@@ -4,9 +4,11 @@ sidebar_position: 1
 
 # Installation
 
-NanosSharp is installed into an existing nanos world server directory on Linux x64. Every release on
+NanosSharp is installed into an existing nanos world server directory on Linux x64 or Windows x64. Every release on
 [GitHub](https://github.com/DasDarki/NanosSharp/releases) contains a bundle with the native library, the managed runtime
-and a launcher, and an installer that sets everything up.
+and an installer that sets everything up. The Linux bundle ships a launcher and uses the system .NET runtime, the
+Windows bundle is self-contained and loads automatically. The sections below cover Linux first; for Windows jump to
+[Windows dedicated server](#windows-dedicated-server).
 
 ## Install with the installer
 
@@ -66,6 +68,50 @@ NanosSharp/runtime/    native library and the managed runtime
 
 On the first start NanosSharp creates `NanosSharp.toml` in the server directory, see
 [Configuration](../reference/configuration.md).
+
+## Windows dedicated server
+
+NanosSharp also runs on a Windows nanos world dedicated server. The Windows bundle is self-contained: it ships the
+native proxy, the managed runtime and the .NET runtime, so there is no separate .NET install and no launcher script.
+
+### Install with the installer
+
+Run the installer in the server directory, next to `NanosWorldServer.exe`:
+
+```powershell
+cd C:\path\to\nanos-world-server
+curl.exe -fsSLo nanossharp-install.exe https://github.com/DasDarki/NanosSharp/releases/latest/download/nanossharp-install-win-x64.exe
+.\nanossharp-install.exe server
+```
+
+The installer downloads the latest release, checks it against the published checksums and extracts it into the server.
+Run it again to update, and `.\nanossharp-install.exe server --uninstall` removes NanosSharp.
+
+### Install by hand
+
+Extract the Windows server bundle next to `NanosWorldServer.exe`:
+
+```powershell
+cd C:\path\to\nanos-world-server
+curl.exe -L -o nanossharp-server.zip https://github.com/DasDarki/NanosSharp/releases/latest/download/nanossharp-server-<version>-win-x64.zip
+Expand-Archive nanossharp-server.zip -DestinationPath . -Force
+del nanossharp-server.zip
+```
+
+This adds `version.dll` and `NanosSharp\` (the managed runtime and a bundled .NET runtime) next to the server.
+
+### Start the server
+
+Start `NanosWorldServer.exe` as usual. `version.dll` loads NanosSharp automatically, so no launcher and no launch
+options are needed. A successful start logs to `NanosSharp\nanossharp.log`:
+
+```
+[NanosSharp] .NET 10.0.x runtime started.
+```
+
+On the first start NanosSharp creates `NanosSharp.toml` next to the server, see
+[Configuration](../reference/configuration.md). There is no launcher on Windows, so update by running the installer
+again instead of through automatic updates.
 
 ## Updating
 
