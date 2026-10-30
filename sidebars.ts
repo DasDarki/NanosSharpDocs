@@ -27,6 +27,7 @@ const sidebars: SidebarsConfig = {
         'guides/dependency-injection',
         'guides/async',
         'guides/lua-interop',
+        'guides/package-apis',
         'guides/networking',
         'guides/debugging',
       ],

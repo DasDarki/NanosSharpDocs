@@ -68,6 +68,12 @@ Each C# package is a regular nanos world package. It gets its own scripting envi
 collectible `AssemblyLoadContext` in .NET. Unloading a package unloads its assemblies, which makes hot reload possible
 on the server.
 
+Packages that depend on one another (`packages_requirements`, or `packages_optional` for soft dependencies) share the
+dependency's own loaded assembly, so a type has one identity across them. On top of that a package can expose a typed API
+to other C# packages with `PackageApi` - the type safe alternative to `Package.Export` for package to package calls - and
+resolve it by contract. The registry behind it is managed only, so it behaves the same inside the client sandbox and
+grants no extra authority there. See the [Package APIs](../guides/package-apis.md) guide.
+
 ## Generated API
 
 The typed API is generated per side from a dump of the native API and the official API definitions. Native signatures
