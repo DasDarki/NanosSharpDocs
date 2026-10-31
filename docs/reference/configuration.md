@@ -32,6 +32,9 @@ sources = ["https://api.nuget.org/v3/index.json"]
 
 [projects]
 generate = true
+
+[cdn]
+server_cdn_url = ""
 ```
 
 | Setting | Description |
@@ -47,6 +50,21 @@ generate = true
 | `hot_reload.verify_unload` | Check that the assemblies of a reloaded package were unloaded and warn about leaks. |
 | `nuget.sources` | NuGet feeds used to restore `PackageReference` items of script packages. |
 | `projects.generate` | Generate `Server/<package>.csproj` for script packages without a project file. |
+| `cdn.server_cdn_url` | Redirect the server's file transfers to this CDN (empty = off), see [CDN file transfer](#cdn-file-transfer). |
+
+## CDN file transfer
+
+nanos world sends a package's `Client/` and `Shared/` files to every connecting player. For large files this is slow,
+so NanosSharp can offload the downloads to a content delivery network:
+
+- On the **server**, set `cdn.server_cdn_url`. The server then answers its `/file` requests with a 302 redirect to the
+  same endpoint on the CDN, so players download from the CDN instead of the server. The CDN has to serve nanos world's
+  `/file` endpoint over a mirror of the delivered files, not plain static files. This works on Linux and Windows servers.
+- On a **client**, set `cdn.client_file_transfer_kib` in the client's `NanosSharp.toml` to fetch files of at least that
+  size over HTTP (which the server redirects to the CDN) instead of the slower in-game socket transfer. The stock client
+  disables HTTP transfer, this re-enables it for NanosSharp clients.
+
+Both settings are off by default, and players without NanosSharp keep using the in-game socket transfer.
 
 ## Environment variables
 
