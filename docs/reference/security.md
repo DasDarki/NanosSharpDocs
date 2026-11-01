@@ -38,8 +38,9 @@ the code:
 - **No ambient authority.** The reactor is handed no capability it is not given explicitly. It has no file system
   access beyond the single directory the host stages its assemblies into, no network, no process creation, no
   environment, no native calls and no foreign function interface.
-- **The compiler stays outside.** Roslyn and NuGet run in the trusted host, never in the sandbox. The sandbox has no
-  compiler, no dependency resolver and no way to fetch or emit native code.
+- **No compiler in the sandbox.** The sandbox has no compiler, no dependency resolver and no way to fetch or emit
+  native code. Client C# is compiled ahead of time on the server, not on the client, so the sandbox only ever loads an
+  already-compiled assembly.
 - **One brokered door.** The only way out is the `nanos` import seam. Every import is implemented by the trusted host,
   which reads the arguments out of guest memory, validates and translates them, and calls the engine on the guest's
   behalf. There is no second channel.
@@ -72,8 +73,9 @@ turned off. The private signing key is never in the repository or in CI logs.
 - **Packages share one reactor.** For the session there is a single reactor; packages are separated inside it by
   collectible load contexts and per-package scopes, which is logical isolation rather than a separate sandbox per
   package. Per-package isolation is possible future work.
-- **The trusted host compiles untrusted source.** Roslyn compiling the downloaded client source is part of the trusted
-  computing base by deliberate choice.
+- **The server compiles untrusted source.** Each package's client C# is compiled on the server, with Roslyn, into the
+  assembly the client receives, so that compiler is part of the trusted computing base by deliberate choice. The client
+  no longer receives source or runs a compiler; see [client code protection](./client-code-protection.md).
 - **Interpreter, for now.** The reactor runs on the Mono interpreter. That is a performance characteristic, not a
   security one; an ahead-of-time reactor is a follow-up.
 
