@@ -35,7 +35,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Reference',
-      items: ['reference/configuration', 'reference/performance', 'reference/architecture', 'reference/security'],
+      items: ['reference/configuration', 'reference/performance', 'reference/architecture', 'reference/security', 'reference/client-code-protection'],
     },
     {
       type: 'category',
